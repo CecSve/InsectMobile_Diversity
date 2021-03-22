@@ -1,8 +1,8 @@
-# Non-destructive DNA extraction and automated purification of complex arthropod samples #
+# Urbanisation is a driver for reduced insect diversity across multiple land cover types #
 
-This repository (R project) contains all scripts necessary to run the ecological/statistical analyses from the study "Non-destructive DNA extraction and automated purification of complex arthropod samples" (Svenningsen et al.).
+This repository (R project) contains all scripts necessary to run the ecological/statistical analyses from the study "Urbanisation is a driver for reduced insect diversity across multiple land cover types" (Svenningsen et al.).
 
-The data were collected in June 2018 as part of the citizen science project InsectMobilen ("Insektmobilen") at the Natural History Museum of Denmark. 
+The data were collected in June 2018 as part of the citizen science project InsectMobilen ("Insektmobilen") at the Natural History Museum of Denmark & iDiv in Germany. 
 
 ## Preparation of ASV tables and sequencing data ##
 
