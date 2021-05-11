@@ -16,7 +16,7 @@ setdiff(biomass$SampleID, pcrids$SampleID) # unprocessed samples (may need updat
 labdata <- merge(pcrids, biomass, by = c("SampleID", "PID")) 
 
 buffer <- read.table("data/labdata/PID_SampleID_size_insectvolume_buffer.txt", sep = "\t", header = T)
-image <- read.delim("H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/data/labdata/imagerecognition.txt")
+image <- read.delim("data/labdata/imagerecognition.txt")
 
 labdata <- merge(labdata, buffer, by = c("SampleID_size", "PID"))
 str(image)
@@ -50,8 +50,8 @@ labdata <- labdata %>%
   mutate(Qubit = ifelse(as.character(Qubit) == "too high", "100", as.character(Qubit)))
   
 ### sampling event data ############################
-SamplingEvent <- read.csv("H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/data/samplingevent/SamplingEvent.csv", sep=";")
-routeID <- read.delim("H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/data/samplingevent/DK_routeID.txt")
+SamplingEvent <- read.csv("data/samplingevent/SamplingEvent.csv", sep=";")
+routeID <- read.delim("data/samplingevent/DK_routeID.txt")
 metadata <- merge(SamplingEvent, routeID, by = "SampleID")
 setdiff(labdata$SampleID, metadata$SampleID) # as far as I remember, those samples were not collected, but they at least don't have any data in the master sheet either, so we can ignore them
 metadata <- merge(metadata, labdata, by = c("SampleID", "PID"))
@@ -85,13 +85,13 @@ metadata$LandUSeType <- mapvalues(
   from = c(
     'mark',
     'skov',
-    'skov, tør',
-    'tør',
-    'tør, mark',
-    'tør, våd',
+    'skov, tÃ¸r',
+    'tÃ¸r',
+    'tÃ¸r, mark',
+    'tÃ¸r, vÃ¥d',
     'urban',
-    'våd',
-    'våd, tør'
+    'vÃ¥d',
+    'vÃ¥d, tÃ¸r'
   ),
   to = c(
     'Farmland',
@@ -170,4 +170,4 @@ data$Time_driven <- as.double(data$Time_driven)
 str(data)
 data$Velocity <- (data$Route_length*2)/data$Time_driven
 
-write.table(data, file = "H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/cleaned-data/DK_rough_landuse_biomass.txt")
+write.table(data, file = "cleaned-data/DK_rough_landuse_biomass.txt")

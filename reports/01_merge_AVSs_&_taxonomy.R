@@ -7,13 +7,13 @@ library(seqinr)
 
 # sequence data for libraries 10, 13, 16, 19, 22, 25, 28, 34, 36, 38, 40, 42, 44, 46 (library 4 not included)
 lulified_nochim <-
-  readRDS("H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/data/fwh/lulified_nochim.RDS") # read in the lulufied RDS file for library 10, 13 and 16
+  readRDS("data/fwh/lulified_nochim.RDS") # read in the lulufied RDS file for library 10, 13 and 16
 otus <- lulified_nochim[["curated_table"]] # extract the otutable
 otus <- rownames_to_column(otus, var = "otuid")
 asvtable <- otus[,!grepl("IM17",colnames(otus))] # remove samples from 2017 - German samples still in there, but will be removed when merging with metadata eventually
 
 # the fasta file has been subset to only contain sequences with a length over 200 bp, so the asv table should only have asvs with the correct read length
-fastas <- read.fasta("H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/data/fwh/lulufied_otus_lengthcorrected.fasta")
+fastas <- read.fasta("data/fwh/lulufied_otus_lengthcorrected.fasta")
 keep <- names(fastas)
 test <- asvtable %>% column_to_rownames(var = "otuid")
 asvtable <- test[(rownames(test) %in% keep), ]
@@ -24,7 +24,7 @@ asvs <- asvtable[, grepl("IM18_*", names(asvtable))] # only keep Danish samples 
 names(asvs)
 
 # get metadata
-data <- read.delim("H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/cleaned-data/DK_metadata_2018.txt",sep=" ")
+data <- read.delim("cleaned-data/DK_metadata_2018.txt",sep=" ")
 
 data <- data %>% filter(PCRID %in% colnames(asvs)) # only retain metadata for the samples that are in the sequence table
 keep <- data$PCRID
@@ -44,9 +44,9 @@ colSums(asvs)
 min(colSums(asvs))
 
 # taxonomy data 
-taxonomy_1 <- read.delim("H:/Documents/Insektmobilen/Analysis/DADA2/fwh/all_2018/data/blastresult_1.csv", sep = ",")
-taxonomy_2 <- read.delim("H:/Documents/Insektmobilen/Analysis/DADA2/fwh/all_2018/data/blastresult_2.csv", sep = ",")
-taxonomy_3 <- read.delim("H:/Documents/Insektmobilen/Analysis/DADA2/fwh/all_2018/data/blastresult_3.csv", sep = ",")
+taxonomy_1 <- read.delim("data/fwh/blastresult_1.csv", sep = ",")
+taxonomy_2 <- read.delim("data/fwh/blastresult_2.csv", sep = ",")
+taxonomy_3 <- read.delim("data/fwh/blastresult_3.csv", sep = ",")
 
 # merge taxonomy data
 taxonomy <- rbind(taxonomy_1, taxonomy_2)
@@ -71,7 +71,7 @@ keep <- rownames(taxonomy_class)
 asvtable <- asvs[(rownames(asvs) %in% keep), ]
 
 # save outputs
-write.table(asvtable,file="H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/cleaned-data/DK_asvtable_2018_data.txt",sep="\t")
-write.table(data,file="H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/cleaned-data/DK_metadata_2018_sequenced.txt",sep="\t")
-write.table(taxonomy_class,file="H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/cleaned-data/DK_taxonomy_Insecta.txt",sep="\t")
-write.table(taxonomy_99,file="H:/Documents/Insektmobilen/Analysis/InsectMobile_Diversity/cleaned-data/DK_taxonomy_Insecta_99.txt",sep="\t")
+write.table(asvtable,file="cleaned-data/DK_asvtable_2018_data.txt",sep="\t")
+write.table(data,file="cleaned-data/DK_metadata_2018_sequenced.txt",sep="\t")
+write.table(taxonomy_class,file="cleaned-data/DK_taxonomy_Insecta.txt",sep="\t")
+write.table(taxonomy_99,file="cleaned-data/DK_taxonomy_Insecta_99.txt",sep="\t")
